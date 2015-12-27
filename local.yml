@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  vars_prompt:
+    - name: ansible_sudo_pass
+      prompt: 'sudo password'
+      private: yes
+  roles:
+    - fedora23_base
+    - fedora23_dotfiles
+    - fedora23_xwin
