@@ -6,19 +6,15 @@
     - libselinux-python
     - libsemanage-python
     - polkit
-    - acpid
     - net-tools
     - bind-utils
     - nfs-utils
     - zsh
     - vim
 
-- name: Enable services
+- name: Enable polkit
   become: true
-  service: name={{ item }} state=started enabled=yes
-  with_items:
-    - acpid
-    - polkit
+  service: name=polkit state=started enabled=yes
 
 - name: Disable SSH password authentication
   become: true
