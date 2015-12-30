@@ -10,6 +10,20 @@
     - i3lock
     - feh
     - rxvt-unicode-256color
+    - lightdm
+
+- name: Enable lightdm
+  become: true
+  service: name=lightdm enabled=yes
+
+- name: Get default target
+  command: systemctl get-default
+  register: runlevel
+
+- name: Set systemd target
+  become: true
+  command: systemctl set-default graphical.target
+  when: runlevel.stdout != "graphical.target"
 
 - name: Install X11 applications
   become: true
