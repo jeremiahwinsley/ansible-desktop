@@ -11,6 +11,8 @@
     - nfs-utils
     - zsh
     - vim
+    - openconnect
+    - gnupg2-smime
 
 - name: Enable polkit
   become: true
@@ -20,3 +22,15 @@
   become: true
   lineinfile: dest=/etc/ssh/sshd_config regexp="^PasswordAuthentication" line="PasswordAuthentication no" state=present
   notify: restart ssh
+
+- name: Create .gnupg directory
+  file: path=~{{ ansible_user_id }}/.gnupg state=directory mode=0700
+
+- name: Copy gpg-agent.conf
+  copy: src=gpg-agent.conf dest=~{{ ansible_user_id }}/.gnupg/gpg-agent.conf mode=0600
+
+- name: Add udev rule for Yubikey
+  become: true
+  copy: 
+    dest: /etc/udev/rules.d/60-yubikey.rule
+    content: 'SUBSYSTEMS=="usb", ATTRS{idVendor}=="1050", ATTRS{idProduct}=="0111", OWNER="{{ ansible_user_id }}"'
