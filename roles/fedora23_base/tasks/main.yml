@@ -12,6 +12,11 @@
     - zsh
     - vim
     - openconnect
+    - screen
+    - aria2
+    - binutils
+    - gcc
+    - autossh
 
 - name: Enable polkit
   become: true
