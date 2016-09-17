@@ -6,5 +6,6 @@
       private: yes
   roles:
     - fedora23_base
+    - fedora23_gpg
     - fedora23_dotfiles
     - fedora23_xwin
