@@ -1,0 +1,29 @@
+---
+- fail: msg='Unsupported base OS - requires Ubuntu 18.04'
+  when: ansible_distribution != 'Ubuntu' or ansible_distribution_version != '18.04'
+
+- name: Install base utilities
+  apt: name={{ item }} state=present
+  with_items:
+    - curl
+    - wget
+    - screen
+    - vim
+    - zfsutils-linux
+    - nmap
+    - exfat-utils
+    - openssh-server
+    - smartmontools
+    - sdparm
+    - aria2
+    - lxd
+
+- name: Disable SSH password authentication
+  lineinfile: dest=/etc/ssh/sshd_config regexp="^PasswordAuthentication" line="PasswordAuthentication no" state=present
+  notify: restart ssh
+
+- name: Enable UFW
+  ufw: state=enabled
+
+- name: Allow ssh through firewall
+  ufw: rule=allow name=OpenSSH

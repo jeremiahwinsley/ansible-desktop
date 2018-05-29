@@ -1,0 +1,26 @@
+---
+- name: Install prerequisites
+  apt: name={{item}} state=present
+  with_items:
+    - zsh
+    - homesick
+  
+- name: Clone dotfiles
+  become: yes
+  become_user: "{{dotfiles_user}}"
+  git: 
+    repo: https://github.com/jeremiahwinsley/dotfiles.git 
+    dest: /home/{{dotfiles_user}}/.homesick/repos/dotfiles 
+    accept_hostkey: true
+
+- name: Link dotfiles
+  become: yes
+  become_user: "{{dotfiles_user}}"
+  command: homesick link
+  args:
+    creates: /home/{{dotfiles_user}}/.zshrc
+
+- name: Change login shell
+  user: name={{dotfiles_user}} shell=/usr/bin/zsh
+
+

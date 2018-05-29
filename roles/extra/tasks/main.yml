@@ -1,0 +1,9 @@
+---
+- name: Install extras
+  apt: name={{item}} state=present
+  with_items:
+    - network-manager-openconnect-gnome
+    - libconfig-inifiles-perl # sanoid
+    - icedtea-plugin # javaws
+    - gnome-color-manager
+    - xca

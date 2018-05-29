@@ -1,0 +1,8 @@
+---
+- name: Add docker CE repo
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic edge
+    state: present
+
+- name: Install docker-ce
+  apt: name=docker-ce state=present

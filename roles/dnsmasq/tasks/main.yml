@@ -1,0 +1,15 @@
+---
+- name: Disable systemd-resolved
+  service: name=systemd-resolved state=stopped enabled=false
+
+- name: Set dns plugin for NetworkManager
+  ini_file:
+    path: /etc/NetworkManager/NetworkManager.conf
+    section: main
+    option: dns
+    value: dnsmasq
+  notify: restart NetworkManager
+
+- name: Add lxd config for dnsmasq
+  copy: src=lxd.conf dest=/etc/NetworkManager/dnsmasq.d/lxd
+  notify: restart NetworkManager

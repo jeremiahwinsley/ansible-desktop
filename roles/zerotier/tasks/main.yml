@@ -1,0 +1,8 @@
+---
+- name: Add zerotier repo
+  apt_repository:
+    repo: deb http://download.zerotier.com/debian/bionic bionic main
+    state: present
+
+- name: Install zerotier
+  apt: name=zerotier-one state=present
