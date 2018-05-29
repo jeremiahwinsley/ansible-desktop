@@ -2,6 +2,9 @@
 - name: Disable systemd-resolved
   service: name=systemd-resolved state=stopped enabled=false
 
+- stat: path=/etc/resolv.conf
+  register: rc
+
 - name: Set dns plugin for NetworkManager
   ini_file:
     path: /etc/NetworkManager/NetworkManager.conf
@@ -10,6 +13,13 @@
     value: dnsmasq
   notify: restart NetworkManager
 
+- name: Remove resolv.conf symlink
+  when: rc.stat.islnk is defined and rc.stat.islnk
+  file: path=/etc/resolv.conf state=absent
+  notify: restart NetworkManager
+
 - name: Add lxd config for dnsmasq
   copy: src=lxd.conf dest=/etc/NetworkManager/dnsmasq.d/lxd
   notify: restart NetworkManager
+
+- meta: flush_handlers
