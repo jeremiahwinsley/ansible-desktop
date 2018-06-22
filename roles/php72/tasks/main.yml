@@ -11,3 +11,4 @@
     - php7.2-zip
     - php-imagick
     - php-redis
+    - php-apcu
