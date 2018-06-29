@@ -1,0 +1,40 @@
+---
+# Playbook for pkgin on OS X and BSD
+# pkgin install ansible || brew install ansible
+- hosts: localhost
+  tasks:
+    - name: base packages
+      pkgin: name={{item}} state=present
+      with_items:
+        - gnupg2
+        - git
+        - pwgen
+        - aria2
+        - wget
+        - vim
+        - nmap
+        - screen
+        - dos2unix
+        - p7zip
+        - xmlstarlet
+        - openconnect
+        - zsh
+    - name: php72 packages
+      pkgin: name={{item}} state=present
+      with_items:
+        - php72-apcu
+        - php72-imagick
+        - php72-xdebug
+        - php72-redis3
+        - php72-json
+        - php72-mbstring
+        - php72-opcache
+        - php72-mysqli
+        - php72-curl
+        - php72-pdo
+        - php72-pdo_pgsql
+        - php72-pdo_mysql
+        - php72-sodium
+        - php72-zip
+        - php72-intl
+
