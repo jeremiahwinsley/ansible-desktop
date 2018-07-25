@@ -6,4 +6,5 @@
     - libconfig-inifiles-perl # sanoid
     - icedtea-plugin # javaws
     - gnome-color-manager
+    - virt-viewer
     - xca
